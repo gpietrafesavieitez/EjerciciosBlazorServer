@@ -1,0 +1,45 @@
+﻿@page "/tareas"
+
+<div class="container">
+     <div class="row">
+         <div class="col-md-12">
+             <div class="input-group mb-3">
+                 <input @bind="Name" type="text" class="form-control" placeholder="Dale un nombre a la tarea">
+                 <div class="input-group-append">
+                     <button @onclick="NewJob" class="btn btn-primary" type="button">Añadir</button>
+                 </div>
+             </div>
+         </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Tareas pendientes</h3>
+            <ul>
+                @foreach (var job in JobList)
+                {
+                    if (!job.Status)
+                    {
+                        <li>
+                            <input type="checkbox" @bind="@job.Status" /> @job.Name
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Tareas completadas</h3>
+            <ul>
+                @foreach (var job in JobList)
+                {
+                    if (job.Status)
+                    {
+                        <li>
+                            <input @bind="@job.Status" type="checkbox" /> @job.Name
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
