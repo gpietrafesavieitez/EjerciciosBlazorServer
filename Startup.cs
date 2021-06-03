@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using EjerciciosBlazorServer.Data.Organizador;
 
 namespace EjerciciosBlazorServer
 {
@@ -27,6 +29,8 @@ namespace EjerciciosBlazorServer
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddDbContext<Contexto>(Options =>
+            Options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

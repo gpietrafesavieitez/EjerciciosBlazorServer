@@ -1,9 +1,0 @@
-﻿@page "/entidades"
-
-@foreach (var personaFiltrada in PersonasFiltradas)
-{
-    <p>Nombre: @personaFiltrada.Nombre</p>
-    <p>Edad: @personaFiltrada.Edad</p>
-    <p>---------------------</p>
-}
-<button @onclick="FiltraPersonas">Filtrar</button>
