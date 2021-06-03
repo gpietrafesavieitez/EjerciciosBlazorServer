@@ -16,8 +16,7 @@ namespace EjerciciosBlazorServer.Pages
         public int ListaActual { get; set; }
         public int TareaActual { get; set; }
 
-        //TODO: Comentarios
-        //TODO: Edicion
+        private string Comentario = "";
 
         protected override void OnInitialized()
         {
@@ -41,9 +40,14 @@ namespace EjerciciosBlazorServer.Pages
             MisPasos = null;
         }
 
-        private void EditarLista(Lista miLista)
+        private void EditarLista(string nombre)
         {
-            MiLista = miLista;
+            var entidad = Contexto.Listas.SingleOrDefault(lista => lista.Id == ListaActual);
+            if (entidad.Nombre != null)
+            {
+                entidad.Nombre = nombre;
+            }
+            Contexto.SaveChanges();
         }
 
         private void BorrarLista(Lista miLista)
@@ -134,6 +138,7 @@ namespace EjerciciosBlazorServer.Pages
             MisPasos = Contexto.Pasos
                 .Where(paso => paso.Tarea == TareaActual)
                 .ToList();
+            CargarComentario();
         }
 
         private void BorrarPaso(Paso miPaso)
@@ -157,5 +162,27 @@ namespace EjerciciosBlazorServer.Pages
             Contexto.SaveChanges();
         }
 
+        private void EditarTarea(string nombre)
+        {
+            var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual);
+            if (entidad.Nombre != null)
+            {
+                entidad.Nombre = nombre;
+            }
+            Contexto.SaveChanges();
+        }
+
+        private void CargarComentario()
+        {
+            Comentario = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual).Comentario;
+        }
+
+        private void EditarComentario()
+        {
+            var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual);
+            entidad.Comentario = Comentario;
+            Contexto.SaveChanges();
+        }
+        
     }
 }

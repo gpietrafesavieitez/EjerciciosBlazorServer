@@ -28,11 +28,8 @@
                             <i class="oi oi-list"></i>
                         </div>
                     </div>
-                    @* DEBERÍA VALUE SER BIND-VALUE PARA EDITAR? *@
-                    @* TODO: Editar campos *@
-                    <input @onclick="(()=>CargarTareas(lista.Id))" value="@lista.Nombre" type="text" class="form-control">
+                    <input @onclick="(()=>CargarTareas(lista.Id))" value="@lista.Nombre" @onchange="(EventArgs) => {EditarLista(EventArgs.Value.ToString());}" type="text" class="form-control">
                     <div class="input-group-append">
-                        <button class="btn btn-warning" type="button">Editar</button>
                         <button @onclick="(()=>BorrarLista(lista))" class="btn btn-danger" type="button">Borrar</button>
                     </div>
                 </div>
@@ -66,9 +63,8 @@
                                     <input @bind="@tarea.Estado" @onclick="(()=>CambiarEstadoTarea(tarea.Id))" type="checkbox" />
                                 </div>
                             </div>
-                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" type="text" class="form-control">
+                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" @onchange="(EventArgs) => {EditarTarea(EventArgs.Value.ToString());}" type="text" class="form-control">
                             <div class="input-group-append">
-                                <button class="btn btn-warning" type="button">Editar</button>
                                 <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-danger" type="button">Borrar</button>
                             </div>
                         </div>
@@ -88,9 +84,8 @@
                                     <input @bind="@tarea.Estado" @onclick="(()=>CambiarEstadoTarea(tarea.Id))" type="checkbox" />
                                 </div>
                             </div>
-                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" type="text" class="form-control">
+                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" @onchange="(EventArgs) => {EditarTarea(EventArgs.Value.ToString());}" type="text" class="form-control">
                             <div class="input-group-append">
-                                <button class="btn btn-warning" type="button">Editar</button>
                                 <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-danger" type="button">Borrar</button>
                             </div>
                         </div>
@@ -133,13 +128,20 @@
                             <input value="@paso.Nombre" type="text" class="form-control">
                         }
                         <div class="input-group-append">
-                            <button class="btn btn-warning" type="button">Editar</button>
                             <button @onclick="(()=>BorrarPaso(paso))" class="btn btn-danger" type="button">Borrar</button>
-                        </div>
+                       </div>
                     </div>
                 }
-                <textarea></textarea>
+            <textarea @onchange="HandleOnChange">@Comentario</textarea>
             }
         </div>
     </div>
 </div>
+
+@code {
+    private void HandleOnChange(ChangeEventArgs args)
+    {
+        Comentario = args.Value.ToString();
+        EditarComentario();
+    }
+}
