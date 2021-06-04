@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using EjerciciosBlazorServer.Data.Organizador;
 
@@ -16,7 +15,7 @@ namespace EjerciciosBlazorServer.Pages
         public int ListaActual { get; set; }
         public int TareaActual { get; set; }
 
-        private string Comentario = "";
+        private string Comentario;
 
         protected override void OnInitialized()
         {
@@ -177,11 +176,12 @@ namespace EjerciciosBlazorServer.Pages
             Comentario = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual).Comentario;
         }
 
-        private void EditarComentario()
-        {
+        private void EditarComentario(string texto)
+        { 
             var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual);
-            entidad.Comentario = Comentario;
+            entidad.Comentario = texto;
             Contexto.SaveChanges();
+            CargarComentario();
         }
         
     }

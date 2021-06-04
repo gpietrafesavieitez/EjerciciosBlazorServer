@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-xl-3">
             <EditForm Model="@MiLista" OnValidSubmit="GuardarLista">
                 <DataAnnotationsValidator />
                 <div class="input-group mb-3">
@@ -15,11 +15,10 @@
                     </div>
                     <InputText @bind-Value="MiLista.Nombre" class="form-control" placeholder="Nombre de la lista" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Crear</button>
+                        <button class="btn btn-outline-primary" type="submit">Crear</button>
                     </div>
                 </div>
             </EditForm>
-            <br />
             @foreach (var lista in MisListas)
             {
                 <div class="input-group mb-3">
@@ -30,12 +29,12 @@
                     </div>
                     <input @onclick="(()=>CargarTareas(lista.Id))" value="@lista.Nombre" @onchange="(EventArgs) => {EditarLista(EventArgs.Value.ToString());}" type="text" class="form-control">
                     <div class="input-group-append">
-                        <button @onclick="(()=>BorrarLista(lista))" class="btn btn-danger" type="button">Borrar</button>
+                        <button @onclick="(()=>BorrarLista(lista))" class="btn btn-outline-danger" type="button">Borrar</button>
                     </div>
                 </div>
             }
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-6">
             <EditForm Model="@MiTarea" OnValidSubmit="GuardarTarea">
                 <DataAnnotationsValidator />
                 <div class="input-group mb-3">
@@ -44,15 +43,17 @@
                             <i class="oi oi-circle-check"></i>
                         </div>
                     </div>
-                    <InputText @bind-Value="MiTarea.Nombre" class="form-control" placeholder="Nombre de la tarea" />
+                    <InputText @bind-Value="MiTarea.Nombre" class="form-control" placeholder="Dale un nombre a la tarea a realizar" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Crear</button>
+                        <button class="btn btn-outline-primary" type="submit">Crear</button>
                     </div>
                 </div>
             </EditForm>
-            <br />
             @if (MisTareas != null)
             {
+                <div class="alert alert-danger">
+                    <b>No completado</b>
+                </div>
                 @foreach (var tarea in MisTareas)
                 {
                     if (!tarea.Estado)
@@ -65,14 +66,13 @@
                             </div>
                             <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" @onchange="(EventArgs) => {EditarTarea(EventArgs.Value.ToString());}" type="text" class="form-control">
                             <div class="input-group-append">
-                                <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-danger" type="button">Borrar</button>
+                                <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-outline-danger" type="button">Borrar</button>
                             </div>
                         </div>
                     }
                 }
                 <div class="alert alert-success">
                     <b>Completado</b>
-                    <span class="oi oi-chevrom-bottom"></span>
                 </div>
                 @foreach (var tarea in MisTareas)
                 {
@@ -84,16 +84,16 @@
                                     <input @bind="@tarea.Estado" @onclick="(()=>CambiarEstadoTarea(tarea.Id))" type="checkbox" />
                                 </div>
                             </div>
-                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" @onchange="(EventArgs) => {EditarTarea(EventArgs.Value.ToString());}" type="text" class="form-control">
+                            <input @onclick="(()=>CargarPasos(tarea.Id))" value="@tarea.Nombre" @onchange="(EventArgs) => {EditarTarea(EventArgs.Value.ToString());}" type="text" class="form-control tachado">
                             <div class="input-group-append">
-                                <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-danger" type="button">Borrar</button>
+                                <button @onclick="(()=>BorrarTarea(tarea))" class="btn btn-outline-danger" type="button">Borrar</button>
                             </div>
                         </div>
                     }
                 }
             }
         </div>
-        <div class="col-xl-4">
+        <div class="col-xl-3">
             <EditForm Model="@MiPaso" OnValidSubmit="GuardarPaso">
                 <DataAnnotationsValidator />
                 <div class="input-group mb-3">
@@ -102,13 +102,12 @@
                             <i class="oi oi-check"></i>
                         </div>
                     </div>
-                    <InputText @bind-Value="MiPaso.Nombre" class="form-control" placeholder="Nombre del paso" />
+                    <InputText @bind-Value="MiPaso.Nombre" class="form-control" placeholder="Subtarea o paso" />
                     <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Crear</button>
+                        <button class="btn btn-outline-primary" type="submit">Crear</button>
                     </div>
                 </div>
             </EditForm>
-            <br />
             @if (MisPasos != null)
             {
                 @foreach (var paso in MisPasos)
@@ -128,20 +127,19 @@
                             <input value="@paso.Nombre" type="text" class="form-control">
                         }
                         <div class="input-group-append">
-                            <button @onclick="(()=>BorrarPaso(paso))" class="btn btn-danger" type="button">Borrar</button>
-                       </div>
+                            <button @onclick="(()=>BorrarPaso(paso))" class="btn btn-outline-danger" type="button">Borrar</button>
+                        </div>
                     </div>
                 }
-            <textarea @onchange="HandleOnChange">@Comentario</textarea>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="oi oi-pencil"></i>
+                        </span>
+                    </div>
+                    <textarea @onchange="(EventArgs) => {EditarComentario(EventArgs.Value.ToString());}" value="@Comentario" class="form-control" placeholder="Añade un comentario a la tarea"></textarea>
+                </div>
             }
         </div>
     </div>
 </div>
-
-@code {
-    private void HandleOnChange(ChangeEventArgs args)
-    {
-        Comentario = args.Value.ToString();
-        EditarComentario();
-    }
-}
