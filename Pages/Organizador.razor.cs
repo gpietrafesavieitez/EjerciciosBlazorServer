@@ -12,9 +12,8 @@ namespace EjerciciosBlazorServer.Pages
         public List<Lista> MisListas { get; set; }
         public List<Tarea> MisTareas { get; set; }
         public List<Paso> MisPasos { get; set; }
-        public int ListaActual { get; set; }
-        public int TareaActual { get; set; }
 
+        private int ListaActual, TareaActual;
         private string Comentario;
 
         protected override void OnInitialized()
@@ -105,14 +104,7 @@ namespace EjerciciosBlazorServer.Pages
         private void CambiarEstadoTarea(int idTarea)
         {
             var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == idTarea);
-            if (entidad.Estado)
-            {
-                entidad.Estado = false;
-            }
-            else
-            {
-                entidad.Estado = true;
-            }
+            entidad.Estado = entidad.Estado ? false : true;
             Contexto.SaveChanges();
         }
 
@@ -150,14 +142,7 @@ namespace EjerciciosBlazorServer.Pages
         private void CambiarEstadoPaso(int idPaso)
         {
             var entidad = Contexto.Pasos.SingleOrDefault(paso => paso.Id == idPaso);
-            if (entidad.Estado)
-            {
-                entidad.Estado = false;
-            }
-            else
-            {
-                entidad.Estado = true;
-            }
+            entidad.Estado = entidad.Estado ? false : true;
             Contexto.SaveChanges();
         }
 
