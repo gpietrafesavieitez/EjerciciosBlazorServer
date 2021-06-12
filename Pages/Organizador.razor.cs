@@ -90,6 +90,16 @@ namespace EjerciciosBlazorServer.Pages
             MisPasos = null;
         }
 
+        private void EditarTarea(string nombre)
+        {
+            var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual);
+            if (entidad.Nombre != null)
+            {
+                entidad.Nombre = nombre;
+            }
+            Contexto.SaveChanges();
+        }
+
         private void BorrarTarea(Tarea miTarea)
         {
             Contexto.Tareas.Remove(miTarea);
@@ -143,16 +153,6 @@ namespace EjerciciosBlazorServer.Pages
         {
             var entidad = Contexto.Pasos.SingleOrDefault(paso => paso.Id == idPaso);
             entidad.Estado = entidad.Estado ? false : true;
-            Contexto.SaveChanges();
-        }
-
-        private void EditarTarea(string nombre)
-        {
-            var entidad = Contexto.Tareas.SingleOrDefault(tarea => tarea.Id == TareaActual);
-            if (entidad.Nombre != null)
-            {
-                entidad.Nombre = nombre;
-            }
             Contexto.SaveChanges();
         }
 
